@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -26,11 +27,65 @@ namespace SvgToXaml.ViewModels
             _images = new ObservableCollectionSafe<ImageBaseViewModel>();
             OpenFileCommand = new DelegateCommand(OpenFileExecute);
             OpenFolderCommand = new DelegateCommand(OpenFolderExecute);
+            ProcessDropedSvgContentCommand = new DelegateCommand(ProcessDropedSvgContenExecute);
             ExportDirCommand = new DelegateCommand(ExportDirExecute);
-            InfoCommand = new DelegateCommand(InfoExecute);
 
             ContextMenuCommands = new ObservableCollection<Tuple<object, ICommand>>();
             ContextMenuCommands.Add(new Tuple<object, ICommand>("Open Explorer", new DelegateCommand<string>(OpenExplorerExecute))); 
+        }
+
+        private void ProcessDropedSvgContenExecute()
+        {
+            
+            if (string.IsNullOrEmpty(DropedSvgContent)) 
+            { 
+                return; 
+            }
+
+            var freshSvg = ExtractSvg(DropedSvgContent);
+
+            const string tempFilePath = "temp.svg";
+            using (StreamWriter writetext = new StreamWriter(tempFilePath))
+            {
+                writetext.WriteLine(freshSvg);
+            }
+
+            ImageBaseViewModel.OpenDetailWindow(new SvgImageViewModel(tempFilePath));
+        }
+
+
+        public static string ExtractSvg(string jsContent)
+        {
+            // Regular expression to match the <svg> element and its contents while ignoring {...props}
+            string pattern = @"<svg[^>]*>(.*?)<\/svg>";
+
+            // Match the pattern in the provided JavaScript content
+            Match match = Regex.Match(jsContent, pattern, RegexOptions.Singleline);
+
+            if (match.Success)
+            {
+                // Get the SVG element
+                string svgElement = match.Value;
+
+                // Remove {...props} from the <svg> tag
+                string svgWithoutProps = Regex.Replace(svgElement, @"\{\.\.\.props\}", "");
+
+                return svgWithoutProps;
+            }
+
+            return jsContent;
+        }
+
+
+        private string m_dropedSvgContent;
+        public string DropedSvgContent
+        {
+            get { return m_dropedSvgContent; }
+            set
+            {
+                m_dropedSvgContent = value;
+                OnPropertyChanged("DropedSvgContent");
+            }
         }
 
         private void OpenFolderExecute()
@@ -148,10 +203,7 @@ namespace SvgToXaml.ViewModels
             File.WriteAllText(t4FileName, text, Encoding.UTF8);
         }
 
-        private void InfoExecute()
-        {
-            MessageBox.Show("SvgToXaml © 2015 Bernd Klaiber\n\nPowered by\nsharpvectors.codeplex.com (Svg-Support),\nicsharpcode (AvalonEdit)", "Info");
-        }
+       
         private void OpenExplorerExecute(string path)
         {
             Process.Start(path);
@@ -191,9 +243,10 @@ namespace SvgToXaml.ViewModels
         }
 
         public ICommand OpenFolderCommand { get; set; }
+
+        public ICommand ProcessDropedSvgContentCommand { get; set; }
         public ICommand OpenFileCommand { get; set; }
         public ICommand ExportDirCommand { get; set; }
-        public ICommand InfoCommand { get; set; }
 
         public ObservableCollection<Tuple<object, ICommand>> ContextMenuCommands { get; set; }
 
