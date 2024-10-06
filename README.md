@@ -1,11 +1,17 @@
-# SvgToXaml
-Smart tool to view svg-files and convert them to xaml for use in .NET
-There are 3 major use cases:
-View many svg-files, examine single files closer (see additional Info, svg sources, xaml code)
-Convert svg-file to xaml
-Batch conversion of many svg-files
+# NextSvgToXaml
+This is an extension of the famous (SvgToXaml)[https://github.com/BerndK/SvgToXaml] which is a smart tool to view svg-files and convert them to xaml for use in .NET
+There are 3 major use cases in the original release with 3 more added in this one:
+### Original
+* View many svg-files, examine single files closer (see additional Info, svg sources, xaml code)
+* Convert svg-file to xaml
+* Batch conversion of many svg-files
+### NextSvgToXaml
+* Support for copy & paste direct content of the SVG file
+* Paser for any kind of SVG component taken from (https://reactsvgicons.com)[https://reactsvgicons.com] - just copy and paste the component, NextSvgToXaml will take for the rest
+* Build-in support for generating 6 (3 for light theme, 3 for dark theme) predefiend color based on differnt state of a button: normal, pressed, hover
+  
 # View
-Just start SvgToXaml and drag a folder into the view, this folder will open and you'll see a list of all the svgs located in that folder. Sure there is a button to open also a "open folder" dialog. Double click a icon see the detail view.
+Just start NextSvgToXaml and drag a folder into the view, this folder will open and you'll see a list of all the svgs located in that folder. Sure there is a button to open also a "open folder" dialog. Double click a icon see the detail view.
 
 ![Main View](/Doc/MainView.PNG)
 
