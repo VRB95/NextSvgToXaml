@@ -1,5 +1,5 @@
 # NextSvgToXaml
-This is an extension of the famous (SvgToXaml)[https://github.com/BerndK/SvgToXaml] which is a smart tool to view svg-files and convert them to xaml for use in .NET
+This is an extension of the famous [SvgToXaml](https://github.com/BerndK/SvgToXaml) which is a smart tool to view svg-files and convert them to xaml for use in .NET
 There are 3 major use cases in the original release with 3 more added in this one:
 ### Original
 * View many svg-files, examine single files closer (see additional Info, svg sources, xaml code)
