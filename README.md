@@ -7,7 +7,7 @@ There are 3 major use cases in the original release with 3 more added in this on
 * Batch conversion of many svg-files
 ### NextSvgToXaml
 * Support for copy & paste direct content of the SVG file
-* Paser for any kind of SVG component taken from (https://reactsvgicons.com)[https://reactsvgicons.com] - just copy and paste the component, NextSvgToXaml will take for the rest
+* Paser for any kind of SVG component taken from [https://reactsvgicons.com](https://reactsvgicons.com) - just copy and paste the component, NextSvgToXaml will take for the rest
 * Build-in support for generating 6 (3 for light theme, 3 for dark theme) predefiend color based on differnt state of a button: normal, pressed, hover
   
 # View
